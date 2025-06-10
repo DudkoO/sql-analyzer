@@ -1,0 +1,26 @@
+let {
+	CONSOLE_LOGGING_LEVELS: consoleLoggingLevels = 'custom,info,error,warn,query',
+	RABBITMQ_MESSAGE_TTL: rabbitMqDefaultMessageTtl = '120000',
+	RABBITMQ_USER,
+	RABBITMQ_PASS,
+	RABBITMQ_HOST,
+	QUEUE_NAME_GOOGLE_MAPPER = 'mapper',
+	POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_HOST, POSTGRES_PORT: postgresPOrt = '5432',
+	REDUCER_API_PORT: reducerApiPort = '4000'
+} = process.env;
+
+const CONSOLE_LOGGING_LEVELS = consoleLoggingLevels.split(',');
+const RABBITMQ_MESSAGE_TTL = Number.parseInt(rabbitMqDefaultMessageTtl);
+const POSTGRES_PORT = Number.parseInt(postgresPOrt);
+const REDUCER_API_PORT = Number.parseInt(reducerApiPort);
+
+export {
+	CONSOLE_LOGGING_LEVELS,
+	RABBITMQ_USER,
+	RABBITMQ_PASS,
+	RABBITMQ_HOST,
+	RABBITMQ_MESSAGE_TTL,
+	QUEUE_NAME_GOOGLE_MAPPER,
+	POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_HOST, POSTGRES_PORT,
+	REDUCER_API_PORT
+};

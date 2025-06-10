@@ -1,0 +1,34 @@
+{
+  "name": "producer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "up": "rm -rf dist && tsc --incremental && node --experimental-modules dist/src/main.js",
+    "docker-up": "rm -rf dist && tsc --incremental && node --experimental-modules --env-file .env dist/src/main.js",
+    "local-up": "rm -rf dist && tsc --incremental && dotenv -e .env node dist/src/main.js",
+    "watch": "nodemon -e ts -w src -w typings --exec 'npm run docker-up'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "_moduleAliases": {
+    "@": "./dist/src",
+    "@lib": "./dist/src/lib",
+    "@enums": "./dist/src/enums",
+    "@config": "./dist/src/config",
+    "@interfaces": "./dist/src/interfaces",
+    "@classes": "./dist/src/classes",
+    "@constants": "./dist/src/constants",
+    "@entities": "./dist/src/entities"
+  },
+  "devDependencies": {
+    "@types/module-alias": "^2.0.4",
+    "@types/node": "^20.11.30"
+  },
+  "dependencies": {
+    "@alohateam/logger": "^0.1.8",
+    "@alohateam/rabbit-mq-sdk": "^1.4.0",
+    "dotenv": "^16.4.5",
+    "module-alias": "^2.2.3"
+  },
+  "private": true
+}

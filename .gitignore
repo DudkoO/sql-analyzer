@@ -1,0 +1,9 @@
+.idea
+data
+.env
+reducer/.idea
+producer/.idea
+mapper/.idea
+reducer/node_modules
+producer/node_modules
+mapper/node_modules

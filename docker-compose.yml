@@ -1,0 +1,117 @@
+services:
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data:z
+    env_file: .env
+
+  producer:
+    restart: always
+    container_name: producer
+    build:
+      context: ./producer
+      dockerfile: ./Dockerfile
+    depends_on:
+      - rabbit3
+    volumes:
+      - ./producer/src:/usr/src/app/src
+    env_file: .env
+
+  mapper:
+    restart: always
+    container_name: mapper
+    build:
+      context: ./mapper
+      dockerfile: ./Dockerfile
+    depends_on:
+      - rabbit3
+      - postgres
+    volumes:
+      - ./mapper/src:/usr/src/app/src
+    env_file: .env
+
+  mapper2:
+    restart: always
+    container_name: mapper2
+    build:
+      context: ./mapper
+      dockerfile: ./Dockerfile
+    depends_on:
+      - rabbit3
+      - postgres
+    volumes:
+      - ./mapper/src:/usr/src/app/src
+    env_file: .env
+  
+  reducer:
+    restart: always
+    container_name: reducer
+    build:
+      context: ./reducer
+      dockerfile: ./Dockerfile
+    depends_on:
+      - rabbit3
+      - postgres
+    volumes:
+      - ./reducer/src:/usr/src/app/src
+    env_file: .env
+
+  rabbit1:
+    build:
+      context: docker/rabbitmq
+      dockerfile: Dockerfile
+    container_name: rabbit1
+    hostname: rabbit1
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "${RABBITMQ_ERLANG_COOKIE}"
+      RABBITMQ_NODENAME: "rabbit"
+      RABBITMQ_USER: "${RABBITMQ_USER}"
+      RABBITMQ_PASS: "${RABBITMQ_PASS}"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - ./data/rabbit1/:/var/lib/rabbitmq/
+
+  rabbit2:
+    build:
+      context: docker/rabbitmq
+      dockerfile: Dockerfile
+    container_name: rabbit2
+    hostname: rabbit2
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "${RABBITMQ_ERLANG_COOKIE}"
+      RABBITMQ_NODENAME: "rabbit"
+      RABBITMQ_USER: "${RABBITMQ_USER}"
+      RABBITMQ_PASS: "${RABBITMQ_PASS}"
+    ports:
+      - "15673:15672"
+      - "5673:5672"
+    volumes:
+      - ./data/rabbit2/:/var/lib/rabbitmq/
+    depends_on:
+      - rabbit1
+
+  rabbit3:
+    build:
+      context: docker/rabbitmq
+      dockerfile: Dockerfile
+    container_name: rabbit3
+    hostname: rabbit3
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "${RABBITMQ_ERLANG_COOKIE}"
+      RABBITMQ_NODENAME: "rabbit"
+      RABBITMQ_USER: "${RABBITMQ_USER}"
+      RABBITMQ_PASS: "${RABBITMQ_PASS}"
+    ports:
+      - "15674:15672"
+      - "5674:5672"
+    volumes:
+      - ./data/rabbit3/:/var/lib/rabbitmq/
+    depends_on:
+      - rabbit1
+      - rabbit2
