@@ -1,0 +1,44 @@
+{
+  "name": "mapper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "up": "rm -rf dist && tsc --incremental && node --experimental-modules dist/src/main.js",
+    "docker-up": "rm -rf dist && tsc --incremental && node --experimental-modules --env-file .env dist/src/main.js",
+    "local-up": "rm -rf dist && tsc --incremental && dotenv -e .env node dist/src/main.js",
+    "watch": "nodemon -e ts -w src -w typings --exec 'npm run dev'",
+    "test": "jest"
+  },
+  "_moduleAliases": {
+    "@": "./dist/src",
+    "@lib": "./dist/src/lib",
+    "@enums": "./dist/src/enums",
+    "@config": "./dist/src/config",
+    "@interfaces": "./dist/src/interfaces",
+    "@classes": "./dist/src/classes",
+    "@constants": "./dist/src/constants",
+    "@entities": "./dist/src/entities"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/module-alias": "^2.0.4",
+    "@types/node": "^20.11.30",
+    "@types/pg": "^8.11.11",
+    "@types/sequelize": "^4.28.20",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.4"
+  },
+  "dependencies": {
+    "@alohateam/importer": "^1.0.0",
+    "@alohateam/logger": "^0.1.8",
+    "@alohateam/rabbit-mq-sdk": "^1.4.0",
+    "dotenv": "^16.4.5",
+    "module-alias": "^2.2.3",
+    "pg": "^8.14.1",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.2",
+    "sequelize-typescript": "^2.1.6"
+  },
+  "private": true
+}

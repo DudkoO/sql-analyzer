@@ -1,0 +1,8 @@
+const path = require('path');
+
+module.exports = {
+  config: path.resolve(__dirname, 'dist', 'src', 'postgres', 'sequelize-cli-config.js'),
+  'models-path': path.resolve(__dirname, 'dist', 'src', 'postgres', 'models'),
+  'migrations-path': path.resolve(__dirname, 'dist', 'src', 'postgres', 'migrations'),
+  'seeders-path': path.resolve(__dirname, 'dist', 'src', 'postgres', 'seeders'),
+};
